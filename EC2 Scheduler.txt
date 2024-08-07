@@ -1,0 +1,24 @@
+
+AWS Instance Scheduler
+======================
+# AWS Instance Scheduler leverages AWS resource tags and AWS Lambda to automatically stop and restart EC2 and RDS instances.
+# The schedule with configuration (such as time zone, time interval, etc.) is stored inside an Amazon DynamoDB table.
+
+1. Log in to the AWS Management Console. Move to CloudFormation console
+
+2. Create stack
+# select â€œAmazon S3 URLâ€ and specify the URL below:
+https://s3.amazonaws.com/solutions-reference/aws-instance-scheduler/latest/instance-scheduler.template
+# Set Stack name & parameters
+# Wait for the CloudFormation stack creation
+
+3.  configure your new AWS instance schedule
+ 3.1. In AWS Console move to DynamoDB console
+ 3.2. Find a table with the name of the "stack-configtable" & select it
+ 3.3. Click on "Explore table items", next to Actions button
+     # Scroll down & choose "uk-office-hours", duplicate the item from actions
+     # Give name as "my-office-hours" & change timeze as "Asia/Kolkata"
+ 3.4. Go to Ec2 console, Choose Actions, Instance settings, Manage tags
+     # Create tag with key "Schedule" & value as "my-office-hours"
+
+4. Delete the stack after practise

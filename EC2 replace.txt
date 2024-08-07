@@ -1,0 +1,59 @@
+How can I connect to my Amazon EC2 instance if I lost my SSH key pair after its initial launch?
+
+1.    Create a new key pair.
+ a. using AWS CLI
+$ aws ec2 create-key-pair --key-name dummy --key-type rsa --key-format pem --query "KeyMaterial" --output text > dummy.pem
+$ chmod 400 dummy.pem
+ 
+ b. Using AWS Console
+ - Ec2 Console - Network & Security, Choose Key Pairs
+
+2.    If you create the private key in the Amazon EC2 console, then retrieve the public key for the key pair.
+ $ ssh-keygen -y 
+ # Enter the pem file with full path 
+
+3.    Open the Amazon EC2 console.
+
+4.    Stop your instance.
+
+5.    Choose Actions, Instance settings, Edit user data.
+
+6.    Copy the following script into the Edit user data dialog box:
+
+Content-Type: multipart/mixed; boundary="//"
+MIME-Version: 1.0
+
+--//
+Content-Type: text/cloud-config; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="cloud-config.txt"
+
+#cloud-config
+cloud_final_modules:
+- [users-groups, once]
+users:
+  - name: username
+    ssh-authorized-keys: 
+    - PublicKeypair
+
+# Replace username with your user name, such as ec2-user.
+# Replace PublicKeypair with the public key retrieved in step 2. Be sure to enter the entire public key, starting with ssh-rsa.
+
+7.    Choose Save.
+
+8.    Start your instance.
+
+9.    After the cloud-init phase is complete, validate that the public key was replaced.
+
+Important: Because the script contains a key pair, remove the script from the User Data field.
+
+10.    Stop your instance.
+
+11.    Choose Actions, Instance Settings, Edit user data.
+
+12.    Delete all the text in the Edit user data dialog box, and then choose Save.
+
+13.    Start your instance.
+
+14. Rename dummy.pem to master.pem & test connection

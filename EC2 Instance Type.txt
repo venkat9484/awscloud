@@ -1,0 +1,30 @@
+Change the instance type of an instance store-backed instance
+=============================================================
+# An instance store-backed instance is an instance that has an instance store root volume.
+# You can't change the instance type of an instance that has an instance store root volume.
+
+To migrate your application to a new instance, do the following:
+
+1. Back up the data on your original instance.
+
+2. Create an AMI from your original instance.
+#  Choose Actions, Image & Templates, Create image
+
+3. Launch a new instance from this AMI and select the instance type that you want.
+
+4. Install your application on the new instance.
+
+
+Change the instance type of an EBS-backed instance
+==================================================
+1.    Create a instance with EBS volume.
+$ lsblk
+$ sudo file -s /dev/xvdb
+$ sudo mkfs -t xfs /dev/xvdb
+$ sudo mkdir /wezvatech
+$ sudo mount /dev/xvdb /wezvatech
+$ sudo chown ubuntu:ubuntu /wezvatech
+
+2.    Stop your instance.
+
+3.    Choose Actions, Instance settings, Change instance type.

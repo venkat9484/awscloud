@@ -1,0 +1,36 @@
+Create an Application Load Balancer
+===================================
+
+Step 0: Set up test servers
+Step 1: Configure a target group
+Step 2: Register targets
+Step 3: Configure a load balancer and a listener
+Step 4: Test the load balancer
+
+Set User Data as following for MicroService01:
+#!/bin/bash
+touch zero
+apt update -y
+apt install apache2 -y
+ufw allow 'Apache'
+uff enable
+echo "<html><body><h1 style=\"font-size:50px;color:blue;\">WEZVA TECHNOLOGIES (ADAM) <br> <font style=\"color:red;\"> www.wezva.com <br> <font style=\"color:green;\"> +91-9739110917 <br> <font style=\"color:orange;\"> MICROSERVICE_01 = `hostname` </h1> </body></html>" > /var/www/html/index.html
+
+Set User Data as following for MicroService02:
+#!/bin/bash
+touch zero
+apt update -y
+apt install apache2 -y
+ufw allow 'Apache'
+uff enable
+echo "<html><body><h1 style=\"font-size:50px;color:blue;\">WEZVA TECHNOLOGIES (ADAM) <br> <font style=\"color:red;\"> www.wezva.com <br> <font style=\"color:green;\"> +91-9739110917 <br> <font style=\"color:brown;\"> MICROSERVICE_02 = `hostname` </h1> </body></html>" > /var/www/html/microservice02.html
+
+Create an Network Load Balancer
+===============================
+Step 0: Set up test servers
+Step 1: Configure a target group
+ - set the protocol as TCP & port 80
+Step 2: Register targets
+Step 3: Create Elastic IP
+Step 4: Configure a load balancer and a listener
+Step 5: Test the load balancer
